@@ -9,6 +9,7 @@ console.log("%c GeoDash Clone", "color: blue;");
 /*****************************************************/
 const SCREENWIDTH = 540;
 const SCREENHEIGHT = 540;
+const PLAYER_ON_GROUND = 493;
 
 const PLAYER_SIZE = 50;
 
@@ -22,7 +23,7 @@ var score = 0;
 function setup() {
     console.log("setup: ");
     cnv = new Canvas(SCREENWIDTH, SCREENHEIGHT);
-    world.gravity.y = 10;
+    world.gravity.y = 80;
     
     // Creating Sprites
     createSprites();
@@ -30,24 +31,19 @@ function setup() {
     // Key Presses
     document.addEventListener("keydown", 
         function(event) {
-            if (event.code === 'ArrowLeft') {
-                console.log("Key Pressed")
-                player.vel.x =- 2;
-            } else {
-                
+            console.log(player.y)
+            if(player.y > PLAYER_ON_GROUND) {
+                console.log("JUMPED" + player.y);
+                player.vel.y = -27;
             }
         }
     );
-    document.addEventListener("keyup", 
-        function(event) {
-            if (event.code === 'ArrowLeft') {
-                console.log("Key Unpressed")
-                player.vel.x = 0;
-            } else {
+    //document.addEventListener("keyup", 
+       // function(event) {
+         //   player.vel.y = 0;
                 
-            }
-        }
-    );
+        //}
+    //);
     
 }
 
