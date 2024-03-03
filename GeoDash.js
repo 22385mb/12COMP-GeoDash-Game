@@ -9,14 +9,14 @@ console.log("%c GeoDash Clone", "color: blue;");
 /*****************************************************/
 const SCREENWIDTH = 540;
 const SCREENHEIGHT = 540;
-const PLAYER_ON_GROUND = 493;
+const PLAYER_ON_GROUND = 490;
 
 const PLAYER_SIZE = 50;
 const OBSTACLE_HEIGHT = PLAYER_SIZE;
 const OBSTACLE_WIDTH = PLAYER_SIZE;
 
 var score = 0;
-var spawnDist = 0;
+var newSpawn = 0;
 
 //Creating global variable for obstacles
 var obstacles;
@@ -37,7 +37,7 @@ function setup() {
     document.addEventListener("keydown", 
         function(event) {
             if(player.y > PLAYER_ON_GROUND) {
-                player.vel.y = -33;
+                player.vel.y = -32;
             }
         }
     );
@@ -53,6 +53,15 @@ function draw() {
     background('lightGrey')
     player.rotation = 0;
     // Creating Multiple Obstacles
+    if (frameCount > newSpawn) {
+        newObstacle();
+        newSpawn = frameCount + random(30, 100);
+    }
+    if (obstacles.length > 0) {
+        if (obstacles[0].x < 0) {
+            obstacles[0].remove();
+        }
+    }
     
     
 }
