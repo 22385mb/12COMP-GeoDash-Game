@@ -20,6 +20,7 @@ var score = 0;
 var pastScore = 0;
 var newSpawn = 0;
 var screenSelector = "start";
+var endFrame;
 
 //Creating global variable for obstacles(group)
 var obstacles;
@@ -42,7 +43,7 @@ function setup() {
         function(event) {
             if(screenSelector == "start") {
                 screenSelector = "game";
-            } else if(screenSelector == "end") {
+            } else if(screenSelector == "end" && frameCount > endFrame + 80) {
                 resetGame();
                 screenSelector = "game";
             } else {
@@ -107,6 +108,8 @@ function newObstacle() {
 function endGame(_player, _obstacle) {
     screenSelector = "end";
     player.remove();
+    obstacles.removeAll();
+    endFrame = frameCount;
     
 }
 
@@ -158,16 +161,15 @@ function endScreen() {
     strokeWeight(4);
     textSize(32);
     fill(255);
-    text("You died! SORRY!", 50, SCREENHEIGHT/2);
+    text("You died! SORRY!", 40, SCREENHEIGHT/2);
     textSize(20);
     text("Your score was " + pastScore, 75, SCREENHEIGHT/2 + 50);
-    text("Press any key to restart", 50, SCREENHEIGHT/2 + 75);
+    text("Press any key to restart", 50, SCREENHEIGHT/2 + 80);
 }
 
 function resetGame() {
     // Reset Game
-    player = new Sprite(100, SCREENHEIGHT - 255, PLAYER_WIDTH, PLAYER_HEIGHT, 'd');
-    player.color = 'lightblue';
+    createSprites();
     player.collides(obstacles, endGame);
     score = 0;
 }
